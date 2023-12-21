@@ -14,5 +14,11 @@ namespace TerminalRpg.Game {
         /// Le caractère représentant l'entité.
         /// </summary>
         public char Representation;
+
+        public Node(char representation, int X = 0, int Y = 0) {
+            this.X = X;
+            this.Y = Y;
+            Representation = representation;
+        }
     }
 }
