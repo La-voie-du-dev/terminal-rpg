@@ -1,20 +1,14 @@
 using TerminalRpg.Game;
 
-Node node = new Node('o', 2, 2);
-Node nRef = node;
+Tile tile = new Tile();
 
-Console.WriteLine(
-    "node Node['{0}', ({1}, {2})] / nRef Node['{3}', ({4}, {5})]",
-    node.Representation, node.X, node.Y,
-    nRef.Representation, nRef.X, nRef.Y
-);
+tile.AddNode(new Node('o', 1, 0));
+tile.AddNode(new Node('o', 2, 2));
+tile.AddNode(new Node('#', 4, 0));
+tile.AddNode(new Node('.', 1, 1));
+tile.AddNode(new Node('.', 3, 4));
+tile.AddNode(new Node('?', 3, 2));
+tile.AddNode(new Node('?', 0, 3));
+tile.AddNode(new Node('†', 1, 4));
 
-nRef.X = 1;
-nRef.Y = 3;
-nRef.Representation = '#';
-
-Console.WriteLine(
-    "node Node['{0}', ({1}, {2})] / nRef Node['{3}', ({4}, {5})]",
-    node.Representation, node.X, node.Y,
-    nRef.Representation, nRef.X, nRef.Y
-);
+tile.Display();
