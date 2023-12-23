@@ -1,27 +1,27 @@
 namespace TerminalRpg.Game {
     public class Tile {
         // Constantes de classe
-        public const char EMPTY = ' ';
+        private const char EMPTY = ' ';
 
         // Attributs de classe
-        public static char Horizontal = '─';
-        public static char Vertical = '│';
-        public static char TopLeftCorner = '┌';
-        public static char TopRightCorner = '┐';
-        public static char BottomLeftCorner = '└';
-        public static char BottomRightCorner = '┘';
+        public static char Horizontal { get; set; } = '─';
+        public static char Vertical { get; set; } = '│';
+        public static char TopLeftCorner { get; set; } = '┌';
+        public static char TopRightCorner { get; set; } = '┐';
+        public static char BottomLeftCorner { get; set; } = '└';
+        public static char BottomRightCorner { get; set; } = '┘';
 
         // Attributs d'instance
-        public readonly int Lines;
-        public readonly int Columns;
+        public int Lines { get; }
+        public int Columns { get; }
 
-        public List<Node> Nodes;
+        private readonly List<Node> _nodes;
 
         public Tile(int lines = 5, int columns = 5) {
             Lines = lines;
             Columns = columns;
 
-            Nodes = new List<Node>();
+            _nodes = new List<Node>();
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace TerminalRpg.Game {
         /// </summary>
         /// <param name="left">Le caractère coin gauche.</param>
         /// <param name="right">Le caractère coin droit.</param>
-        public void DisplayHorizontalBorder(char left, char right) {
+        private void DisplayHorizontalBorder(char left, char right) {
             // Affichage du coin gauche
             Console.Write(left);
 
@@ -81,8 +81,8 @@ namespace TerminalRpg.Game {
         /// <param name="x">La colonne.</param>
         /// <param name="y">La ligne.</param>
         /// <returns>Le noeud ou null.</returns>
-        public Node? FindNodeByCoordinate(int x, int y) {
-            foreach (Node node in Nodes) {
+        private Node? FindNodeByCoordinate(int x, int y) {
+            foreach (Node node in _nodes) {
                 if (node.X == x && node.Y == y) {
                     return node;
                 }
@@ -103,12 +103,12 @@ namespace TerminalRpg.Game {
                 throw new Exception("Coordonnées invalide");
             }
 
-            if (Nodes.Contains(node)) {
+            if (_nodes.Contains(node)) {
                 throw new Exception("Noeud déjà ajouté");
             }
 
             if (FindNodeByCoordinate(node.X, node.Y) == null) {
-                Nodes.Add(node);
+                _nodes.Add(node);
             } else {
                 throw new Exception(
                     "Un autre noeud occupe déjà cette place"
