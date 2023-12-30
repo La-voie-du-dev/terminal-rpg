@@ -35,6 +35,14 @@ namespace TerminalRpg.Game {
         /// </summary>
         public char Representation { get; }
 
+        /// <summary>
+        /// Nom de l'instance
+        /// </summary>
+        /// <returns>Le nom généré de l'instance</returns>
+        public string Name {
+            get => string.Format("{0}[{1}]", this, GetHashCode());
+        }
+
         public Node(char representation, int X = 0, int Y = 0) {
             this.X = X;
             this.Y = Y;
