@@ -33,7 +33,7 @@ namespace TerminalRpg.Game {
         /// <summary>
         /// Le caractère représentant l'entité.
         /// </summary>
-        public char Representation { get; }
+        public char Representation { get; protected set; }
 
         /// <summary>
         /// Nom de l'instance
