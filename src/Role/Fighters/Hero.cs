@@ -120,5 +120,18 @@ namespace TerminalRpg.Role.Fighters
                 _mana = Math.Min(_mana + MANA_POTION_POINTS, STAT_MAX);
             }
         }
+
+        /// <summary>Récupération des statistiques.</summary>
+        /// <returns>Statistiques sous forme de string.</returns>
+        public string GetStatistics() {
+            return string.Format(
+                "Vie: {1}/{0}  Mana: {2}/{0}  Armure: {3}  Dégâts: {4}",
+                STAT_MAX,
+                Health,
+                Mana,
+                Armor,
+                Damage
+            );
+        }
     }
 }
