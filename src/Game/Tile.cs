@@ -1,3 +1,5 @@
+using TerminalRpg.Role.Fighters;
+
 namespace TerminalRpg.Game {
     public class Tile {
         // Constantes de classe
@@ -48,6 +50,17 @@ namespace TerminalRpg.Game {
         /// préférences d'affichages.
         /// </summary>
         public void Display() {
+            // Affichage des statistiques
+            foreach (Node node in _nodes) {
+                if (node is Hero) {
+                    Hero hero = (Hero) node;
+
+                    Console.WriteLine(
+                        "{0}  {1}", hero.Name, hero.GetStatistics()
+                    );
+                }
+            }
+
             // Affichage du premier séparateur
             DisplayHorizontalBorder(TopLeftCorner, TopRightCorner);
 
