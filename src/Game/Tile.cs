@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using TerminalRpg.Role.Fighters;
 
 namespace TerminalRpg.Game {
@@ -18,6 +19,9 @@ namespace TerminalRpg.Game {
         public int Columns { get; }
 
         private readonly List<Node> _nodes;
+        public ReadOnlyCollection<Node> Nodes {
+            get => _nodes.AsReadOnly();
+        }
 
         public Tile(int lines = 5, int columns = 5) {
             Lines = lines;

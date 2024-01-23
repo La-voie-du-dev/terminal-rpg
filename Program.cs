@@ -21,29 +21,15 @@ tile.AddNode(new Tree(3, 2));
 tile.AddNode(new Tree(0, 3));
 tile.AddNode(enemy);
 
-tile.Display();
-
-// Scénario de combat
-for (int loop = 0; loop < 3; loop++) {
-    hero.MagicAttack(enemy);
-    enemy.Attack(hero);
+// Construction du menu
+foreach (Node node in tile.Nodes) {
+    if (node is Chest) {
+        // TODO (interaction)
+    } else if (node is NPC) {
+        // TODO (interaction)
+    } else if (node is Enemy) {
+        // TODO (attaque, attaque magique, vol d'inventaire)
+    } else if (node is Hero) {
+        // TODO (utilisation de potions de vie ou de mana)
+    }
 }
-
-hero.Attack(enemy);
-enemy.Attack(hero);
-
-hero.Attack(enemy);
-tile.Display();
-
-// Fouiller la carte
-chest.InteractWith(hero);
-npc.InteractWith(hero);
-
-// Restauration
-hero.UseLifePotion();
-hero.UseManaPotion();
-hero.UseManaPotion();
-
-tile.Display();
-
-Console.WriteLine("WIN");
