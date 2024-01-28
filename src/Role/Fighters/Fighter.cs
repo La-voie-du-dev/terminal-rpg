@@ -34,6 +34,9 @@ namespace TerminalRpg.Role.Fighters
             protected set => _damage = IntOver(value, STAT_MIN);
         }
 
+        /// <summary>Indique si le combatant est mort.</summary>
+        public bool Dead { get => _health <= 0; }
+
         public Fighter(
             int health, int armor, int damage, int X = 0, int Y = 0
         ): base(X, Y) {
@@ -47,7 +50,7 @@ namespace TerminalRpg.Role.Fighters
         /// en conséquence.
         /// </summary>
         private void CheckDeath() {
-            if (_health <= 0) {
+            if (Dead) {
                 // Le personnage est mort :
                 //  Modification de l'état d'affichage dans la tuile
                 Representation = DEAD;
