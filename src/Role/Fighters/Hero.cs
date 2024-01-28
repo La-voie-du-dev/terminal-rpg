@@ -10,8 +10,9 @@ namespace TerminalRpg.Role.Fighters
         private const int MAGIC_ATTACK_MANA_COST = 20;
 
         private int _mana;
-        private int _lifePotion = 0;
-        private int _manaPotion = 0;
+
+        public int LifePotion { get; private set; } = 0;
+        public int ManaPotion { get; private set; } = 0;
 
         /// <summary>Mana du héros.</summary>
         public int Mana {
@@ -88,21 +89,21 @@ namespace TerminalRpg.Role.Fighters
         /// <summary>Permet de récupérer des potions de vie.</summary>
         /// <param name="count">Nombre de potions.</param>
         public void TakeLifePotion(int count) {
-            _lifePotion += count;
+            LifePotion += count;
         }
 
         /// <summary>Permet de récupérer des potions de mana.</summary>
         /// <param name="count">Nombre de potions.</param>
         public void TakeManaPotion(int count) {
-            _manaPotion += count;
+            ManaPotion += count;
         }
 
         /// <summary>Consomme une potion de vie.</summary>
         public void UseLifePotion() {
-            if (_lifePotion <= 0) {
+            if (LifePotion <= 0) {
                 throw new GameException("Pas assez de potions de vie");
             } else {
-                _lifePotion--;
+                LifePotion--;
 
                 Health = Math.Min(
                     Health + LIFE_POTION_POINTS, STAT_MAX
@@ -112,10 +113,10 @@ namespace TerminalRpg.Role.Fighters
 
         /// <summary>Consomme une potion de mana.</summary>
         public void UseManaPotion() {
-            if (_manaPotion <= 0) {
+            if (ManaPotion <= 0) {
                 throw new GameException("Pas assez de potions de mana");
             } else {
-                _manaPotion--;
+                ManaPotion--;
 
                 _mana = Math.Min(_mana + MANA_POTION_POINTS, STAT_MAX);
             }
