@@ -1,5 +1,7 @@
 using TerminalRpg.Environment;
 using TerminalRpg.Game;
+using TerminalRpg.Game.Input;
+using TerminalRpg.Game.Input.Actions;
 using TerminalRpg.Role;
 using TerminalRpg.Role.Fighters;
 
@@ -22,14 +24,26 @@ tile.AddNode(new Tree(0, 3));
 tile.AddNode(enemy);
 
 // Construction du menu
+Menu menu = new Menu();
 foreach (Node node in tile.Nodes) {
     if (node is Chest) {
-        // TODO (interaction)
+        menu.AddMenuItem(new IInteractiveMenuItem(
+            "Ouvrir le coffre", (IInteractive) node
+        ));
     } else if (node is NPC) {
-        // TODO (interaction)
+        menu.AddMenuItem(new IInteractiveMenuItem(
+            "Discuter avec le personnage non-joueur", (IInteractive) node
+        ));
     } else if (node is Enemy) {
-        // TODO (attaque, attaque magique, vol d'inventaire)
+        Enemy enemyNode = (Enemy) node;
+        menu.AddMenuItem(new PhysicalAttackMenuItem(enemyNode));
+        menu.AddMenuItem(new MagicAttackMenuItem(enemyNode));
+        menu.AddMenuItem(new RobMenuItem(enemyNode));
     } else if (node is Hero) {
-        // TODO (utilisation de potions de vie ou de mana)
+        Hero heroNode = (Hero) node;
+        menu.AddMenuItem(new UseLifePotionMenuItem(heroNode));
+        menu.AddMenuItem(new UseManaPotionMenuItem(heroNode));
     }
 }
+
+menu.SelectMenuItem().Execute(hero);
