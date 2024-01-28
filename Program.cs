@@ -1,7 +1,6 @@
 using TerminalRpg.Environment;
 using TerminalRpg.Game;
-using TerminalRpg.Game.Input;
-using TerminalRpg.Game.Input.Actions;
+using TerminalRpg.Game.Engine;
 using TerminalRpg.Role;
 using TerminalRpg.Role.Fighters;
 
@@ -23,27 +22,17 @@ tile.AddNode(new Tree(3, 2));
 tile.AddNode(new Tree(0, 3));
 tile.AddNode(enemy);
 
-// Construction du menu
-Menu menu = new Menu();
-foreach (Node node in tile.Nodes) {
-    if (node is Chest) {
-        menu.AddMenuItem(new IInteractiveMenuItem(
-            "Ouvrir le coffre", (IInteractive) node
-        ));
-    } else if (node is NPC) {
-        menu.AddMenuItem(new IInteractiveMenuItem(
-            "Discuter avec le personnage non-joueur", (IInteractive) node
-        ));
-    } else if (node is Enemy) {
-        Enemy enemyNode = (Enemy) node;
-        menu.AddMenuItem(new PhysicalAttackMenuItem(enemyNode));
-        menu.AddMenuItem(new MagicAttackMenuItem(enemyNode));
-        menu.AddMenuItem(new RobMenuItem(enemyNode));
-    } else if (node is Hero) {
-        Hero heroNode = (Hero) node;
-        menu.AddMenuItem(new UseLifePotionMenuItem(heroNode));
-        menu.AddMenuItem(new UseManaPotionMenuItem(heroNode));
-    }
+TileManager manager = new TileManager(hero);
+
+string endMessage;
+try {
+    manager.Play(tile);
+
+    endMessage = "WIN";
+} catch (GameOverException) {
+    endMessage = "GAME OVER";
 }
 
-menu.SelectMenuItem().Execute(hero);
+// Affichage de la carte et du résultat
+tile.Display();
+Console.WriteLine(endMessage);
