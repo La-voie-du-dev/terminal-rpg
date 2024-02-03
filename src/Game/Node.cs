@@ -1,3 +1,5 @@
+using TerminalRpg.Game.Input;
+
 namespace TerminalRpg.Game {
     public class Node {
         private int _x;
@@ -47,6 +49,12 @@ namespace TerminalRpg.Game {
             this.X = X;
             this.Y = Y;
             Representation = representation;
+        }
+
+        /// <summary>Création des actions spécifiques au noeud.</summary>
+        /// <returns>La liste des actions du héros.</returns>
+        public virtual List<MenuItem> GenerateHeroActions() {
+            return new List<MenuItem>();
         }
     }
 }

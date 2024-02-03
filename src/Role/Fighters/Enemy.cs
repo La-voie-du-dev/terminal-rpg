@@ -1,3 +1,6 @@
+using TerminalRpg.Game.Input;
+using TerminalRpg.Game.Input.Actions;
+
 namespace TerminalRpg.Role.Fighters
 {
     public class Enemy : Fighter
@@ -18,6 +21,15 @@ namespace TerminalRpg.Role.Fighters
             Console.WriteLine("{0}: Goûte à ma lame !", Name);
 
             base.Attack(fighter);
+        }
+
+        public override List<MenuItem> GenerateHeroActions()
+        {
+            return new List<MenuItem> {
+                new PhysicalAttackMenuItem(this),
+                new MagicAttackMenuItem(this),
+                new RobMenuItem(this)
+            };
         }
     }
 }

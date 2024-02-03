@@ -1,4 +1,6 @@
 using TerminalRpg.Game;
+using TerminalRpg.Game.Input;
+using TerminalRpg.Game.Input.Actions;
 
 namespace TerminalRpg.Role.Fighters
 {
@@ -45,6 +47,14 @@ namespace TerminalRpg.Role.Fighters
             Console.WriteLine("{0}: Pour la justice !", Name);
 
             base.Attack(fighter);
+        }
+
+        public override List<MenuItem> GenerateHeroActions()
+        {
+            return new List<MenuItem> {
+                new UseLifePotionMenuItem(this),
+                new UseManaPotionMenuItem(this)
+            };
         }
 
         /// <summary>

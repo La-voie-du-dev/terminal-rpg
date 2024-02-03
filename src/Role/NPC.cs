@@ -1,3 +1,5 @@
+using TerminalRpg.Game.Input;
+using TerminalRpg.Game.Input.Actions;
 using TerminalRpg.Role.Fighters;
 
 namespace TerminalRpg.Role
@@ -14,6 +16,16 @@ namespace TerminalRpg.Role
         {
             // Le PNJ se décrit lors de l'interaction
             Console.WriteLine("{0}: {1}", Name, GetDescription());
+        }
+
+        public override List<MenuItem> GenerateHeroActions()
+        {
+            return new List<MenuItem> {
+                new IInteractiveMenuItem(
+                    "Discuter avec le personnage non-joueur",
+                    this
+                )
+            };
         }
     }
 }

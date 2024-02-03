@@ -1,4 +1,6 @@
 using TerminalRpg.Game;
+using TerminalRpg.Game.Input;
+using TerminalRpg.Game.Input.Actions;
 using TerminalRpg.Role;
 using TerminalRpg.Role.Fighters;
 
@@ -44,6 +46,13 @@ namespace TerminalRpg.Environment
                     _manaPotions = 0;
                 }
             }
+        }
+
+        public override List<MenuItem> GenerateHeroActions()
+        {
+            return new List<MenuItem> {
+                new IInteractiveMenuItem("Ouvrir le coffre", this)
+            };
         }
     }
 }
