@@ -1,4 +1,5 @@
 using TerminalRpg.Game.Input;
+using TerminalRpg.Game.Input.Actions;
 using TerminalRpg.Role.Fighters;
 
 namespace TerminalRpg.Game.Engine
@@ -14,13 +15,18 @@ namespace TerminalRpg.Game.Engine
         /// <summary>Construit et gère le menu de la tuile.</summary>
         /// <param name="tile">La tuile sur laquelle jouer.</param>
         /// <returns>Le menu sélectionné par l'utilisateur.</returns>
-        private MenuItem WaitUserInteraction(Tile tile) {
+        private MenuItem WaitUserInteraction(Tile tile, int aliveCount) {
             // Construction du menu
             Menu menu = new Menu();
             foreach (Node node in tile.Nodes) {
                 foreach (MenuItem item in node.GenerateHeroActions()) {
                     menu.AddMenuItem(item);
                 }
+            }
+
+            if (aliveCount <= 0) {
+                // Ajout du menu pour quitter la partie
+                menu.AddMenuItem(new EndGameMenuItem());
             }
 
             return menu.SelectMenuItem();
@@ -48,19 +54,23 @@ namespace TerminalRpg.Game.Engine
         /// <summary>Gère le jeu sur la tuile en paramètre.</summary>
         /// <param name="tile">La tuile sur laquelle jouer.</param>
         public void Play(Tile tile) {
+            bool playing = true;
             int enemyAlive = 1;
-            while (enemyAlive > 0) {
+            while (playing) {
                 // Affichage de l'état courant
                 tile.Display();
 
                 try {
-                    WaitUserInteraction(tile).Execute(_hero);
+                    WaitUserInteraction(tile, enemyAlive).Execute(_hero);
 
                     enemyAlive = ApplyEnemyBehavior(tile);
 
                     if (_hero.Dead) {
                         throw new GameOverException();
                     }
+                } catch (EndGameException) {
+                    // Arrêt de boucle sans Game Over
+                    playing = false;
                 } catch (GameException e) {
                     Console.WriteLine(
                         "Action impossible : {0}",
