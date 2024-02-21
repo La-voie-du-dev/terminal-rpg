@@ -1,8 +1,11 @@
 using TerminalRpg.Environment;
 using TerminalRpg.Game;
+using TerminalRpg.Game.Logging;
 using TerminalRpg.Game.Engine;
 using TerminalRpg.Role;
 using TerminalRpg.Role.Fighters;
+
+LogFactory.Install();
 
 // Préparation de la tuile
 Tile tile = new Tile();
