@@ -1,11 +1,16 @@
+using Microsoft.Extensions.Logging;
 using TerminalRpg.Game;
 using TerminalRpg.Game.Input;
 using TerminalRpg.Game.Input.Actions;
+using TerminalRpg.Game.Logging;
 
 namespace TerminalRpg.Role.Fighters
 {
     public class Hero : Fighter
     {
+        private static readonly ILogger log =
+            LogFactory.GetLogger<Hero>();
+
         private const int LIFE_POTION_POINTS = 50;
         private const int MANA_POTION_POINTS = 40;
 
@@ -81,16 +86,29 @@ namespace TerminalRpg.Role.Fighters
         /// <param name="fighter">Le combattant à dépouiller.</param>
         public void RobInventoryOf(Fighter fighter) {
             if (fighter.Health > 0) {
-                throw new GameException(
-                    "Impossible de voler un combattant vivant"
-                );
+                string message =
+                    "Impossible de voler un combattant vivant";
+
+                log.LogWarning(message);
+                throw new GameException(message);
             } else {
                 // On vole l'arme et l'armure si elles sont plus
                 //  performantes
+                log.LogInformation("Le héros fouille le combattant");
+                log.LogDebug(
+                    "Stat du héros dommage={Damage} armure={Armor}",
+                    Damage, Armor
+                );
+                log.LogDebug(
+                    "Stat de l'ennemi dommage={Damage} armure={Armor}",
+                    fighter.Damage, fighter.Armor
+                );
                 if (fighter.Damage > Damage) {
+                    log.LogInformation("Le héros remplace son arme");
                     Damage = fighter.Damage;
                 }
                 if (fighter.Armor > 0) {
+                    log.LogInformation("Le héros répare son armure");
                     Armor += fighter.Armor;
                 }
             }
