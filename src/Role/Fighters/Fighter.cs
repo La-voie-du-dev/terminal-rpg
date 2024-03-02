@@ -58,6 +58,18 @@ namespace TerminalRpg.Role.Fighters
         }
 
         /// <summary>
+        /// Évalue la possibilité de vol vis-à-vis de l'état de santé.
+        /// </summary>
+        /// <exception cref="GameException">Si impossible</exception>
+        private void TryRob() {
+            if (!Dead) {
+                throw new GameException(
+                    "Impossible de voler un combattant vivant"
+                );
+            }
+        }
+
+        /// <summary>
         /// Applique les dégâts liés à une attaque physique.
         /// </summary>
         /// <param name="damage">Les dégâts à appliquer.</param>
@@ -92,6 +104,28 @@ namespace TerminalRpg.Role.Fighters
         /// <param name="fighter">Le combattant frappé.</param>
         public virtual void Attack(Fighter fighter) {
             fighter.SufferFromPhysicalDamage(_damage);
+        }
+
+        /// <summary>Dérobe l'arme du combattant.</summary>
+        /// <returns>Les dommages de l'arme.</returns>
+        public int RobWeapon() {
+            TryRob();
+
+            int damage = _damage;
+            _damage = 0;
+
+            return damage;
+        }
+
+        /// <summary>Dérobe l'armure du combattant.</summary>
+        /// <returns>La quantité d'armure disponible.</returns>
+        public int RobArmor() {
+            TryRob();
+
+            int armor = _armor;
+            _armor = 0;
+
+            return armor;
         }
 
         /// <summary>

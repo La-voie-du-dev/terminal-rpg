@@ -85,32 +85,24 @@ namespace TerminalRpg.Role.Fighters
         /// <summary>Dérobe l'inventaire du combattant mort.</summary>
         /// <param name="fighter">Le combattant à dépouiller.</param>
         public void RobInventoryOf(Fighter fighter) {
-            if (fighter.Health > 0) {
-                string message =
-                    "Impossible de voler un combattant vivant";
-
-                log.LogWarning(message);
-                throw new GameException(message);
-            } else {
-                // On vole l'arme et l'armure si elles sont plus
-                //  performantes
-                log.LogInformation("Le héros fouille le combattant");
-                log.LogDebug(
-                    "Stat du héros dommage={Damage} armure={Armor}",
-                    Damage, Armor
-                );
-                log.LogDebug(
-                    "Stat de l'ennemi dommage={Damage} armure={Armor}",
-                    fighter.Damage, fighter.Armor
-                );
-                if (fighter.Damage > Damage) {
-                    log.LogInformation("Le héros remplace son arme");
-                    Damage = fighter.Damage;
-                }
-                if (fighter.Armor > 0) {
-                    log.LogInformation("Le héros répare son armure");
-                    Armor += fighter.Armor;
-                }
+            // On vole l'arme et l'armure si elles sont plus
+            //  performantes
+            log.LogInformation("Le héros fouille le combattant");
+            log.LogDebug(
+                "Stat du héros dommage={Damage} armure={Armor}",
+                Damage, Armor
+            );
+            log.LogDebug(
+                "Stat de l'ennemi dommage={Damage} armure={Armor}",
+                fighter.Damage, fighter.Armor
+            );
+            if (fighter.Damage > Damage) {
+                log.LogInformation("Le héros remplace son arme");
+                Damage = fighter.RobWeapon();
+            }
+            if (fighter.Armor > 0) {
+                log.LogInformation("Le héros répare son armure");
+                Armor += fighter.RobArmor();
             }
         }
 
