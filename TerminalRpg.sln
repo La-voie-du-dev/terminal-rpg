@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerminalRpg", "TerminalRpg\TerminalRpg.csproj", "{32A6CEB4-C6FD-4B95-B4AC-614CC7CA2343}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerminalRpg.Test", "TerminalRpg.Test\TerminalRpg.Test.csproj", "{35FA2450-1788-4053-A178-815AD3490CA3}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,5 +32,17 @@ Global
 		{32A6CEB4-C6FD-4B95-B4AC-614CC7CA2343}.Release|x64.Build.0 = Release|Any CPU
 		{32A6CEB4-C6FD-4B95-B4AC-614CC7CA2343}.Release|x86.ActiveCfg = Release|Any CPU
 		{32A6CEB4-C6FD-4B95-B4AC-614CC7CA2343}.Release|x86.Build.0 = Release|Any CPU
+		{35FA2450-1788-4053-A178-815AD3490CA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35FA2450-1788-4053-A178-815AD3490CA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35FA2450-1788-4053-A178-815AD3490CA3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{35FA2450-1788-4053-A178-815AD3490CA3}.Debug|x64.Build.0 = Debug|Any CPU
+		{35FA2450-1788-4053-A178-815AD3490CA3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{35FA2450-1788-4053-A178-815AD3490CA3}.Debug|x86.Build.0 = Debug|Any CPU
+		{35FA2450-1788-4053-A178-815AD3490CA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35FA2450-1788-4053-A178-815AD3490CA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35FA2450-1788-4053-A178-815AD3490CA3}.Release|x64.ActiveCfg = Release|Any CPU
+		{35FA2450-1788-4053-A178-815AD3490CA3}.Release|x64.Build.0 = Release|Any CPU
+		{35FA2450-1788-4053-A178-815AD3490CA3}.Release|x86.ActiveCfg = Release|Any CPU
+		{35FA2450-1788-4053-A178-815AD3490CA3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
