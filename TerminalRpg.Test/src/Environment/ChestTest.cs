@@ -1,4 +1,6 @@
 using TerminalRpg.Environment;
+using TerminalRpg.Game.Input;
+using TerminalRpg.Game.Input.Actions;
 using TerminalRpg.Role.Fighters;
 
 namespace TerminalRpg.Test.Environment
@@ -43,6 +45,15 @@ namespace TerminalRpg.Test.Environment
 
             Assert.That(hero.LifePotion, Is.EqualTo(0));
             Assert.That(hero.ManaPotion, Is.EqualTo(2));
+        }
+
+        [Test]
+        public void TestGenerateHeroActions() {
+            Chest chest = new Chest(1, 2);
+            List<MenuItem> items = chest.GenerateHeroActions();
+
+            Assert.That(items, Is.Not.Empty);
+            Assert.That(items[0], Is.InstanceOf<IInteractiveMenuItem>());
         }
     }
 }
