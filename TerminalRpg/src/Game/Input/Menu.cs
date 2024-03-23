@@ -1,8 +1,16 @@
+using TerminalRpg.Game.IO;
+
 namespace TerminalRpg.Game.Input
 {
     public class Menu {
         /// <summary>Liste des éléments du menu.</summary>
         private readonly List<MenuItem> _menu = new List<MenuItem>();
+        /// <summary>Implémentation d'une console Input/Output.</summary>
+        private IIOConsole _console;
+
+        public Menu(IIOConsole? console = null) {
+            _console = console == null ? new IOConsole() : console;
+        }
 
         /// <summary>Ajoute un nouvel élément au menu.</summary>
         /// <param name="item">L'élément du menu à ajouter.</param>
@@ -18,8 +26,10 @@ namespace TerminalRpg.Game.Input
         private int GetSafeIndex(int maxIndex) {
             int index;
             do {
-                Console.Write("Choisir une action (1-{0}) : ", maxIndex);
-                string? nextLine = Console.ReadLine();
+                _console.Write(string.Format(
+                    "Choisir une action (1-{0}) : ", maxIndex
+                ));
+                string? nextLine = _console.ReadLine();
                 if (nextLine == null) {
                     throw new Exception("Lecture du choix en échec");
                 }
@@ -33,7 +43,9 @@ namespace TerminalRpg.Game.Input
                         throw new GameException("Nombre hors limite");
                     }
                 } catch (Exception e) {
-                    Console.WriteLine("Saisie invalide : {0}", e.Message);
+                    _console.WriteLine(string.Format(
+                        "Saisie invalide : {0}", e.Message
+                    ));
                     index = -1;
                 }
             } while (index == -1);
@@ -48,7 +60,9 @@ namespace TerminalRpg.Game.Input
             int id = 0;
             foreach (MenuItem item in _menu) {
                 id++;
-                Console.WriteLine("{0} - {1}", id, item.Title);
+                _console.WriteLine(string.Format(
+                    "{0} - {1}", id, item.Title
+                ));
             }
 
             return _menu[GetSafeIndex(id)];
