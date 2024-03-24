@@ -7,22 +7,29 @@ using TerminalRpg.Role.Fighters;
 namespace TerminalRpg.Test.Game.Input
 {
     public class MenuTest {
-        [Test]
-        public void TestValidMenuSelection() {
-            Mock<IIOConsole> mock = new Mock<IIOConsole>();
+        private Mock<IIOConsole> mock;
+        private List<MenuItem> items;
+        private Menu menu;
+
+        [SetUp]
+        public void SetupMenu() {
+            mock = new Mock<IIOConsole>();
 
             // Création du menu
-            List<MenuItem> items = new List<MenuItem>();
+            items = new List<MenuItem>();
             items.AddRange(
                 new Hero(100, 100, 100, 20).GenerateHeroActions()
             );
             items.AddRange(new Chest(1, 1).GenerateHeroActions());
 
-            Menu menu = new Menu(mock.Object);
+            menu = new Menu(mock.Object);
             foreach (MenuItem item in items) {
                 menu.AddMenuItem(item);
             }
+        }
 
+        [Test]
+        public void TestValidMenuSelectionInput() {
             // Exécution du menu : tester tous les choix valides
             for (int index = 0; index < items.Count; index++) {
                 // Bouchons retournant l'index humain (index + 1)
@@ -36,6 +43,29 @@ namespace TerminalRpg.Test.Game.Input
                     index + 1
                 );
             }
+        }
+
+        [Test]
+        public void TestValidMenuSelectionOutput() {
+            // Simulation d'une saisie valide
+            mock.Setup(o => o.ReadLine()).Returns("1");
+            menu.SelectMenuItem();
+
+            // Chaque élément est affiché avec l'index humain (1 fois)
+            for (int index = 0; index < items.Count; index++) {
+                mock.Verify(
+                    o => o.WriteLine(string.Format(
+                        "{0} - {1}", index + 1, items[index].Title
+                    )),
+                    Times.Once
+                );
+            }
+            mock.Verify(
+                o => o.Write(string.Format(
+                    "Choisir une action (1-{0}) : ", items.Count
+                )),
+                Times.Once
+            );
         }
     }
 }
