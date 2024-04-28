@@ -10,16 +10,25 @@ namespace TerminalRpg.Game.Logging
 
         /// <summary>Installe le système de journalisation.</summary>
         public static void Install() {
-            // Création de la configuration du logger
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("log-settings.json")
-                .Build();
+            Logger logger;
+            try {
+                // Création de la configuration du logger
+                IConfigurationRoot configuration = 
+                    new ConfigurationBuilder()
+                        .SetBasePath(Directory.GetCurrentDirectory())
+                        .AddJsonFile("log-settings.json")
+                        .Build();
 
-            // Création de l'instance en appliquant la configuration
-            Logger logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(configuration)
-                .CreateLogger();
+                // Création de l'instance en appliquant la configuration
+                logger = new LoggerConfiguration()
+                    .ReadFrom.Configuration(configuration)
+                    .CreateLogger();
+            } catch (FileNotFoundException) {
+                // Le fichier de configuration n'existe pas
+                //  -> Initialisation du logger sans spécifications
+                logger = new LoggerConfiguration()
+                    .CreateLogger();
+            }
 
             // Intégration du Logger Serilog au LoggerFactory
             Factory = new LoggerFactory().AddSerilog(logger);
